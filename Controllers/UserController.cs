@@ -8,18 +8,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
+using NHibernate;
+using NHibernate.Cfg;
 using Sample.Contexts;
+using SQLitePCL;
 
 namespace Sample.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class UserController : ControllerBase, IUsuarioRepo
     {
         private readonly AppDBContext context;
         private readonly ILogger<UserController> _logger;
         private readonly string SQLitePath;
         private readonly SQLiteConnection connection;
+        private readonly ISessionFactory _sessionFactory;
+        private readonly Configuration _configuration;
 
         public UserController(AppDBContext context, ILogger<UserController> logger)
         {
@@ -27,17 +32,21 @@ namespace Sample.Controllers
             _logger = logger;
             SQLitePath = "Data Source=.\\Data\\Neta.db";
             connection = new SQLiteConnection(SQLitePath);
+            _configuration = new Configuration();
+            _configuration.Configure();
+            _configuration.AddAssembly(typeof(Usuario).Assembly);
+            _sessionFactory = _configuration.BuildSessionFactory();
         }
 
         [HttpGet]
         public IEnumerable<Usuario> Get()
         {
-            var res=new List<Usuario>();
+            var res = new List<Usuario>();
             using (connection)
             {
                 connection.Open();
                 using (var command = new SQLiteCommand("SELECT * FROM Usuario", connection))
-                    {
+                {
                     IDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -51,10 +60,11 @@ namespace Sample.Controllers
                     }
                 }
             }
+
             return res;
         }
 
-       
+
         [HttpGet("{id}")]
         public Usuario Get(int id)
         {
@@ -67,7 +77,7 @@ namespace Sample.Controllers
                     IDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
-                        res=new Usuario(
+                        res = new Usuario(
                                     Convert.ToInt32(dr.GetValue(0)),
                                     dr.GetValue(1).ToString(),
                                     dr.GetValue(2).ToString(),
@@ -100,7 +110,7 @@ namespace Sample.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put([FromBody]Usuario value)
+        public void Put([FromBody] Usuario value)
         {
             using (connection)
             {
@@ -128,6 +138,52 @@ namespace Sample.Controllers
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        public void Add(Usuario usuario)
+        {
+            var res = new List<Usuario>();
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.SaveAsync(usuario);
+                    transaction.Commit();
+                }
+            }
+        }
+
+        public void Update(Usuario usuario)
+        {
+            var res = new List<Usuario>();
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.UpdateAsync(usuario);
+                    transaction.Commit();
+                }
+            }
+        }
+
+        public void Remove(Usuario usuario)
+        {
+            var res = new List<Usuario>();
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.DeleteAsync(usuario);
+                    transaction.Commit();
+                }
+            }
+        }
+
+        public Usuario GetUser(int id)
+        {
+            var res = new List<Usuario>();
+            using (ISession session = NHibernateHelper.OpenSession())
+                return (Usuario)session.Get<Usuario>(id);
         }
     }
 }

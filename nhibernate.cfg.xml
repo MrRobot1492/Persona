@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+  <session-factory>
+    <property name="connection.provider">Nhibernate.Connection.DriverConnectionProvider</property>
+    <property name="dialect">NHibernate.Dialect.SqlLiteDialect</property>
+    <property name="connection.driver_class">NHibernate.driver.SqlLiteServerDriver</property>
+    <property  name="connection.connection_string">Data Source=.\\Data\\Neta.db</property>
+  </session-factory>
+</hibernate-configuration>

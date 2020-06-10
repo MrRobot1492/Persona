@@ -1,26 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Projects\\ASPNetCore\\Sample\\Sample\\Sample.csproj": {}
+    "C:\\Users\\tremok\\Desktop\\Persona-master\\Sample.csproj": {}
   },
   "projects": {
-    "E:\\Projects\\ASPNetCore\\Sample\\Sample\\Sample.csproj": {
+    "C:\\Users\\tremok\\Desktop\\Persona-master\\Sample.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Projects\\ASPNetCore\\Sample\\Sample\\Sample.csproj",
+        "projectUniqueName": "C:\\Users\\tremok\\Desktop\\Persona-master\\Sample.csproj",
         "projectName": "Sample",
-        "projectPath": "E:\\Projects\\ASPNetCore\\Sample\\Sample\\Sample.csproj",
+        "projectPath": "C:\\Users\\tremok\\Desktop\\Persona-master\\Sample.csproj",
         "packagesPath": "C:\\Users\\tremok\\.nuget\\packages\\",
-        "outputPath": "E:\\Projects\\ASPNetCore\\Sample\\Sample\\obj\\",
+        "outputPath": "C:\\Users\\tremok\\Desktop\\Persona-master\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "C:\\Users\\tremok\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -59,6 +54,10 @@
               "target": "Package",
               "version": "[3.1.4, )"
             },
+            "NHibernate": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
             "System.Data.SQLite.Core": {
               "target": "Package",
               "version": "[1.0.113.1, )"
@@ -82,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
         }
       }
     }
